@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
+import { toast } from "sonner";
 import { Layout } from "@/components/Layout";
 import { Home } from "@/pages/Home";
 import { Library } from "@/pages/Library";
@@ -11,6 +12,7 @@ import { Documents } from "@/pages/Documents";
 import { DocumentViewer } from "@/pages/DocumentViewer";
 import { ensureAnonymousSession, isSupabaseConfigured } from "@/lib/supabase";
 import { useBackShortcut } from "@/hooks/useBack";
+import { toggleAdmin } from "@/lib/admin";
 
 export default function App() {
   useBackShortcut(); // global Backspace / Alt+Left → go back, on every screen
@@ -21,6 +23,18 @@ export default function App() {
     if (isSupabaseConfigured) {
       void ensureAnonymousSession();
     }
+  }, []);
+
+  // Hidden owner shortcut: Ctrl+Shift+S toggles the scrape-progress dashboard.
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.ctrlKey && e.shiftKey && (e.key === "S" || e.key === "s")) {
+        e.preventDefault();
+        toast(toggleAdmin() ? "Admin mode on" : "Admin mode off");
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
   }, []);
 
   return (

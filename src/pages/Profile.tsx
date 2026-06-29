@@ -3,6 +3,7 @@ import { ArrowRight } from "lucide-react";
 import { PageHeader } from "@/components/PageHeader";
 import { usePreferences } from "@/hooks/usePreferences";
 import { useScrapeProgress } from "@/lib/queries";
+import { useAdmin } from "@/lib/admin";
 import { getContinue } from "@/lib/reader";
 import { APP_THEMES, useAppTheme } from "@/providers/ThemeProvider";
 import type { ReaderTheme } from "@/lib/types";
@@ -13,6 +14,7 @@ export function Profile() {
   const { prefs, update } = usePreferences();
   const { theme: appTheme, setTheme: setAppTheme } = useAppTheme();
   const cont = getContinue();
+  const admin = useAdmin();
 
   return (
     <div>
@@ -22,7 +24,7 @@ export function Profile() {
         subtitle="Your progress and reading preferences."
       />
       <div className="grid max-w-3xl gap-8 px-10 py-8">
-        <CatalogStatus />
+        {admin && <CatalogStatus />}
 
         <section>
           <h2 className="mb-3 font-mono text-[10px] tracking-label text-asterion-muted">
