@@ -1,0 +1,13 @@
+# Minimal Supabase CLI config. Run `supabase link --project-ref <ref>` then
+# `supabase db push` to apply migrations.
+# Content scraping/writes are done by the VM `scraper-service` (service-role key),
+# so there are no Edge Functions to deploy.
+project_id = "asterion"
+
+[db]
+major_version = 15
+
+[auth]
+enabled = true
+# Anonymous sign-ins back the per-device identity (no login UI).
+enable_anonymous_sign_ins = true

@@ -1,0 +1,172 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-serif: "Iowan Old Style", "Palatino Linotype", "Source Serif 4", Georgia, serif;
+    --font-mono: "JetBrains Mono", "SF Mono", "Menlo", monospace;
+    --font-sans: "Inter", system-ui, sans-serif;
+
+    /* App chrome theme: MIDNIGHT (default; ported from Theme.swift). RGB triplets. */
+    --app-bg: 13 12 11;
+    --app-card: 26 24 22;
+    --app-card-hover: 30 28 25;
+    --app-text: 232 220 200;
+    --app-muted: 107 100 89;
+    --app-dim: 74 70 64;
+    --app-border: 42 39 34;
+    --app-border-hover: 58 53 47;
+    --app-synopsis: 160 152 136;
+    --app-accent: 196 164 74;
+    --app-accent-soft: 212 184 106;
+
+    /* Reader-mode theme: DARK (default, ported from Theme.swift asterionReaderText) */
+    --reader-bg: 13 12 11;
+    --reader-text: 200 184 160;
+    --reader-muted: 107 100 89;
+    --reader-accent: 196 164 74;
+    --reader-border: 42 39 34;
+  }
+
+  /* ---- App chrome themes (set via [data-app-theme] on <html>) ---- */
+  [data-app-theme="obsidian"] {
+    --app-bg: 6 6 7;
+    --app-card: 17 17 19;
+    --app-card-hover: 23 23 26;
+    --app-text: 228 228 232;
+    --app-muted: 120 120 130;
+    --app-dim: 70 70 80;
+    --app-border: 32 32 37;
+    --app-border-hover: 48 48 55;
+    --app-synopsis: 165 165 178;
+    --app-accent: 124 154 214;
+    --app-accent-soft: 150 178 232;
+  }
+  [data-app-theme="slate"] {
+    --app-bg: 17 22 28;
+    --app-card: 26 33 42;
+    --app-card-hover: 32 40 50;
+    --app-text: 216 226 238;
+    --app-muted: 130 144 162;
+    --app-dim: 86 98 114;
+    --app-border: 40 50 62;
+    --app-border-hover: 56 68 82;
+    --app-synopsis: 168 182 200;
+    --app-accent: 96 178 168;
+    --app-accent-soft: 124 200 190;
+  }
+  [data-app-theme="parchment"] {
+    --app-bg: 244 240 232;
+    --app-card: 252 249 243;
+    --app-card-hover: 247 243 235;
+    --app-text: 38 34 30;
+    --app-muted: 120 110 98;
+    --app-dim: 158 148 134;
+    --app-border: 222 214 200;
+    --app-border-hover: 204 194 178;
+    --app-synopsis: 92 84 74;
+    --app-accent: 150 110 40;
+    --app-accent-soft: 176 134 58;
+  }
+
+  /* Reader themes selected via [data-reader-theme] on the reader root. */
+  [data-reader-theme="light"] {
+    --reader-bg: 247 244 239;
+    --reader-text: 38 34 30;
+    --reader-muted: 120 112 100;
+    --reader-accent: 150 110 40;
+    --reader-border: 222 214 202;
+  }
+  [data-reader-theme="sepia"] {
+    --reader-bg: 244 236 220;
+    --reader-text: 60 50 38;
+    --reader-muted: 130 116 96;
+    --reader-accent: 150 110 40;
+    --reader-border: 220 206 184;
+  }
+  [data-reader-theme="warm"] {
+    --reader-bg: 26 22 18;
+    --reader-text: 214 196 168;
+    --reader-muted: 140 124 104;
+    --reader-accent: 212 184 106;
+    --reader-border: 46 40 32;
+  }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  body {
+    @apply bg-asterion-bg text-asterion-text font-sans antialiased;
+    margin: 0;
+    overflow-x: hidden;
+  }
+
+  /* Kill the default purple/blue focus rings; use a tasteful keyboard-only ring. */
+  :focus {
+    outline: none;
+  }
+  :focus-visible {
+    outline: 2px solid rgb(var(--app-accent) / 0.7);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+  button,
+  a,
+  input,
+  [role="button"] {
+    outline: none;
+  }
+
+  /* Thin, themed scrollbars for the immersive reader feel. */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-asterion-border rounded-full;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+}
+
+/* Rendered DOCX (mammoth HTML) — themed prose. */
+.doc-prose {
+  font-family: var(--font-serif), Georgia, serif;
+  color: rgb(var(--app-text));
+  font-size: 18px;
+  line-height: 1.8;
+}
+.doc-prose h1,
+.doc-prose h2,
+.doc-prose h3 {
+  font-weight: 600;
+  margin: 1.4em 0 0.5em;
+  line-height: 1.3;
+}
+.doc-prose h1 { font-size: 1.6em; }
+.doc-prose h2 { font-size: 1.35em; }
+.doc-prose h3 { font-size: 1.15em; }
+.doc-prose p { margin: 0 0 1em; }
+.doc-prose a { color: rgb(var(--app-accent)); }
+.doc-prose ul,
+.doc-prose ol { margin: 0 0 1em 1.4em; }
+.doc-prose img { max-width: 100%; border-radius: 6px; }
+.doc-prose table { border-collapse: collapse; margin: 1em 0; }
+.doc-prose td,
+.doc-prose th { border: 1px solid rgb(var(--app-border)); padding: 6px 10px; }
+
+@layer utilities {
+  .tracking-label {
+    letter-spacing: 0.25em;
+  }
+  /* Disable text selection on chrome but allow it in reader body. */
+  .no-select {
+    -webkit-user-select: none;
+    user-select: none;
+  }
+}

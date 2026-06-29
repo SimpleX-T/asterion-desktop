@@ -1,0 +1,10 @@
+[Unit]
+Description=Asterion scraper — drain the scrape_requests queue
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+EnvironmentFile=/etc/asterion/asterion.env
+ExecStart=/usr/local/bin/asterion-catalog-runner queue
+# GCS auth via the VM's attached service account (metadata server).
