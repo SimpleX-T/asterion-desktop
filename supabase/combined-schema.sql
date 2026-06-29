@@ -298,3 +298,11 @@ select
   (select count(*) from public.scrape_requests where status = 'processing') as queue_processing;
 
 grant select on public.scrape_progress to anon, authenticated;
+
+
+-- ============ 0008_hide_progress.sql ============
+-- Hide scrape internals from the public REST surface. The app reads
+-- scrape_progress over an *authenticated* anonymous session (role
+-- `authenticated`), so the owner's admin dashboard keeps working; revoking
+-- `anon` blocks reads made with only the publishable key and no session.
+revoke select on public.scrape_progress from anon;
